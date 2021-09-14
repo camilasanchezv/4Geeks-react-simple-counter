@@ -13,48 +13,42 @@ export default function Counter() {
 	const [stopped, setStopped] = useState(false);
 
 	let timeout = setTimeout(() => {
-		if (seconds === 9) {
-			setSeconds(0);
-			setSecondsDec(secondsDec + 1);
+		if (!stopped) {
+			if (seconds === 9) {
+				setSeconds(0);
+				setSecondsDec(secondsDec + 1);
 
-			if (secondsDec === 5) {
-				setSecondsDec(0);
-				setMinutes(minutes + 1);
+				if (secondsDec === 5) {
+					setSecondsDec(0);
+					setMinutes(minutes + 1);
 
-				if (minutes === 9) {
-					setMinutes(0);
-					setMinutesDec(minutesDec + 1);
+					if (minutes === 9) {
+						setMinutes(0);
+						setMinutesDec(minutesDec + 1);
 
-					if (minutesDec === 5) {
-						setMinutesDec(0);
-						setHours(hours + 1);
+						if (minutesDec === 5) {
+							setMinutesDec(0);
+							setHours(hours + 1);
 
-						if (hours === 9) {
-							setHours(0);
-							setHoursDec(hoursDec + 1);
-						} else setHours(hours + 1);
-					} else setMinutesDec(minutesDec + 1);
-				} else setMinutes(minutes + 1);
-			} else setSecondsDec(secondsDec + 1);
-		} else setSeconds(seconds + 1);
+							if (hours === 9) {
+								setHours(0);
+								setHoursDec(hoursDec + 1);
+							} else setHours(hours + 1);
+						} else setMinutesDec(minutesDec + 1);
+					} else setMinutes(minutes + 1);
+				} else setSecondsDec(secondsDec + 1);
+			} else setSeconds(seconds + 1);
+		}
 	}, 1000);
 
-	const stop = () => {
-		clearTimeout(timeout);
-	};
-
 	useEffect(() => {
-		if (
-			seconds === 9 &&
-			secondsDec === 5 &&
-			minutes === 9 &&
-			minutesDec === 5 &&
+		hoursDec === 9 &&
 			hours === 9 &&
-			hoursDec === 9
-		) {
-			clearTimeout(timeout);
+			minutesDec === 5 &&
+			minutes === 9 &&
+			secondsDec === 5 &&
+			seconds === 9 &&
 			setStopped(true);
-		}
 	}, [seconds]);
 
 	return (
@@ -79,10 +73,7 @@ export default function Counter() {
 					}}></button>
 				<button
 					className="button stop"
-					onClick={() => {
-						stop();
-						setStopped(true);
-					}}></button>
+					onClick={() => setStopped(true)}></button>
 			</div>
 		</div>
 	);
